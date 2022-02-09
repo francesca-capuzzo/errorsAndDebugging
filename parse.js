@@ -109,25 +109,81 @@ class Parser{
         return numberArray;
     }
 
-    static removeN(string){
-        return string.replace(" ", "");
-    }
+  
+    /////////////////////////////////////////////////////////////////////////////////////
 
-    static removeNewLine(string){
+    static cleanStringAndGenerateArray(string){
         const stringNoSpaces = this.replaceAll(string, " ", "");
         const stringWithoutN = this.replaceAll(stringNoSpaces, "\n", "");
         const stringSplit = this.separateStringOnSpecialChar(stringWithoutN);
         return stringSplit;
     }
 
-    static generateSubArrays(string){
-        let multidimensionalArray = [];
-        const array = this.removeNewLine(string);
-        const array1 = multidimensionalArray.push(array.slice(0, 4));
-        const array2 = multidimensionalArray.push(array.slice(4, 8));
-        const array3 = multidimensionalArray.push(array.slice(8, 12));
-        return multidimensionalArray;
+  
+
+    static generateSubArrays(array, len) {
+        let chunks = [];
+        let i = 0;
+        let n = array.length;
+        while (i < n) {
+            chunks.push(array.slice(i, i += len));
+        }
+        return chunks;
     }
+
+
+
+    static generateObjectFromArray(array, keys) {
+        let object={};
+        let values = array;
+        for (let i = 0; i < array.length; i++) {
+            object[keys[i]] = values[i];
+        }
+        return object;
+    }
+
+
+      // static generateSubArrays(string){
+    //     let multidimensionalArray = [];
+    //     const array = this.removeNewLine(string);
+    //     const array1 = multidimensionalArray.push(array.slice(0, 4));
+    //     const array2 = multidimensionalArray.push(array.slice(4, 8));
+    //     const array3 = multidimensionalArray.push(array.slice(8, 12));
+    //     return multidimensionalArray;
+    // }
+
+
+     // static generateObjectFromArray(array) {
+    //     let object=[];
+    //     let keys = array[0];
+    //     let newArray = array[1].concat(array[2]).concat(array[3]);
+    //     let subArrays = this.generateSubArrays(newArray, 4);
+    //     console.log(subArrays);
+    //     for (let k = 0; k < subArrays.length; k++) {
+    //         const values = subArrays[k];
+    //         console.log(values);
+    //         for (let i = 0; i < 4; i++) {
+    //             let obj2 = {};
+    //             obj2[keys[i]] = values[i];
+    //             object.push(obj2);
+    //         }
+    //     }
+    //     return object;  
+    // }
+
+    
+    // static generateObjectFromArray(array) {
+    //     let object={};
+    //     let keys = array[0];
+    //     let newArray = array[1].concat(array[2]).concat(array[3]);
+    //     console.log(newArray);
+    //     let values = newArray;
+    //     for (let i = 0; i < array.length; i++) {
+    //         object[keys[i]] = values[i];
+    //     }
+    //     return object;
+    // }
+
 }
 
 
