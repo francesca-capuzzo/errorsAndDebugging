@@ -108,6 +108,17 @@ class Parser{
         }
         return numberArray;
     }
+
+    static removeN(string){
+        return string.replace(" ", "");
+    }
+
+    static removeNewLine(string){
+        const stringNoSpaces = this.replaceAll(string, " ", "");
+        const stringWithoutN = this.replaceAll(stringNoSpaces, "\n", "");
+        const stringSplit = this.separateStringOnSpecialChar(stringWithoutN);
+        return stringSplit;
+    }
 }
 
 
