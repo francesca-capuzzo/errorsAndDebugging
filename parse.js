@@ -1,0 +1,137 @@
+/* It takes a string as input. 
+It removes spaces from the string. 
+It changes the special characters in the string. 
+It separates the string on the special characters. 
+It transforms the string array into a number array. 
+It returns the number array. 
+
+The function is divided into three main parts: 
+
+* The first part is the part that takes the string as input. 
+* The second part is the part that removes spaces from the string. 
+* The third part is the part that changes the special characters */
+
+class Parser{
+    
+/**
+ * * It takes a string as input. 
+ * * It removes spaces from the string. 
+ * * It changes the special characters in the string. 
+ * * It separates the string on the special characters. 
+ * * It transforms the string array into a number array. 
+ * * It returns the number array. 
+ * 
+ * The function is divided into three main parts: 
+ * 
+ * * The first part is the part that takes the string as input. 
+ * * The second part is the part that removes spaces from the string. 
+ * * The third part is the part that changes the special characters in the string. 
+ * 
+ * The first part is divided into two sub-parts: 
+ * 
+ * * The first sub-part is the part that checks if the string is empty. 
+ * * The second sub-part is the part that checks if the string is valid. 
+ * 
+ * The second part is divided into two sub-parts:
+ * @param {string} string - The string to be parsed.
+ * @returns an array of numbers.
+ */
+    static parseCsvLine(string){
+
+        const IsStringEmpty = string.length === 0;
+
+        if (IsStringEmpty) {
+            throw new EmptyStringError("Stringa vuota")
+        }
+
+        const stringNoSpaces = this.removeSpaces(string);
+        const stringNoCommas = this.changeSpecialChar(stringNoSpaces);
+        const arrayOfString = this.separateStringOnSpecialChar(stringNoCommas);
+        const numberArray = this.transformStringArrayInNumberArray(arrayOfString);
+
+        const CouldNotParseAllArray = numberArray === 0;
+
+        if (CouldNotParseAllArray) {
+            throw new InvalidStringError("Stringa invalida")
+        }
+
+        const AtLeastOneParseIsFailed = numberArray.length < arrayOfString.length;
+
+        if (AtLeastOneParseIsFailed) {
+            throw new PartialInvalidStringError("Parzialmente invalido", numberArray);
+        }
+        return numberArray;
+    }
+
+
+    static replaceAll(string, charToReplace, newChar){
+        const regex = new RegExp(charToReplace, "g");
+        return string.replace(regex, newChar);
+    }
+
+    static removeSpaces(string){
+        return Parser.replaceAll(string, " ", "");
+    }
+
+    static changeSpecialChar(string){
+        return Parser.replaceAll(string, ",", ".");
+    }
+
+    static separateStringOnSpecialChar(string){
+        return string.split(";");
+    }
+
+ /**
+  * *Convert a string array into a number array.*
+  * 
+  * The above function is a JavaScript function. 
+  * 
+  * The function takes a string array as input and returns a number array as output. 
+  * 
+  * The function uses a for loop to iterate over the string array. 
+  * 
+  * For each string in the array, the function checks if the string can be converted to a number. 
+  * 
+  * If the string can be converted to a number, the function adds the number to the number array. 
+  * 
+  * The function returns the number array
+  * @param array - The array to be transformed.
+  * @returns an array of numbers.
+  */
+    static transformStringArrayInNumberArray(array){
+        const numberArray = [];
+        for (const string of array) {
+            const number = parseFloat(string);
+            if (isNaN(number) === false) {
+                numberArray.push(number);
+            }
+        }
+        return numberArray;
+    }
+}
+
+
+class EmptyStringError extends Error{
+    constructor(message){
+        super(message);
+    }
+}
+
+
+class InvalidStringError extends Error{
+    constructor(message){
+        super(message);
+    }
+}
+
+
+class PartialInvalidStringError extends Error{
+    constructor(message, partialResult){
+        super(message);
+        this.partialResult = partialResult;
+    }
+}
+
+
+
+
