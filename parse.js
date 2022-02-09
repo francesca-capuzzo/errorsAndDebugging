@@ -119,6 +119,15 @@ class Parser{
         const stringSplit = this.separateStringOnSpecialChar(stringWithoutN);
         return stringSplit;
     }
+
+    static generateSubArrays(string){
+        let multidimensionalArray = [];
+        const array = this.removeNewLine(string);
+        const array1 = multidimensionalArray.push(array.slice(0, 4));
+        const array2 = multidimensionalArray.push(array.slice(4, 8));
+        const array3 = multidimensionalArray.push(array.slice(8, 12));
+        return multidimensionalArray;
+    }
 }
 
 
